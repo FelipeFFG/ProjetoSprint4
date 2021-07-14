@@ -17,13 +17,11 @@ public class Pessoa {
 
     private String nome;
 
-    @NotBlank(message = "CPF nao pode ser nulo ou vazio")
+
     private BigDecimal cpf;
 
-    @NotBlank(message = "Salario nao pode ser nulo ou vazio")
     private BigDecimal salario;
 
-    @NotBlank(message = "SEXO nao pode ser nulo ou vazio")
     private String sexo;
 
     @OneToMany

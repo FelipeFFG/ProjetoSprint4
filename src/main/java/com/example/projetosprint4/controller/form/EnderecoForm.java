@@ -1,31 +1,14 @@
-package com.example.projetosprint4.model;
+package com.example.projetosprint4.controller.form;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
-@Entity
-public class Endereco {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class EnderecoForm {
 
     private String pais;
-
     private String estado;
-
     private String cidade;
-
     private String cep;
-
     private String rua;
 
-    public Endereco(Long id, String pais, String estado, String cidade, String cep, String rua) {
-        this.id = id;
+    public EnderecoForm(String pais, String estado, String cidade, String cep, String rua) {
         this.pais = pais;
         this.estado = estado;
         this.cidade = cidade;
@@ -33,27 +16,9 @@ public class Endereco {
         this.rua = rua;
     }
 
-    public Endereco(Endereco endereco) {
-        cep =endereco.getCep();
-        pais = endereco.getPais();
-        estado =endereco.getEstado();
-        cidade = endereco.getCidade();
-        cep = endereco.getCep();
-        rua = endereco.getRua();
+    public EnderecoForm() {
     }
 
-    public Endereco() {
-
-    }
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getPais() {
         return pais;

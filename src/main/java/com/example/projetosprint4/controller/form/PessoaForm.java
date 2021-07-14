@@ -1,32 +1,34 @@
 package com.example.projetosprint4.controller.form;
 
+import com.example.projetosprint4.controller.dto.PessoaDto;
 import com.example.projetosprint4.model.Endereco;
 import com.example.projetosprint4.model.Pessoa;
 import com.example.projetosprint4.repository.PessoaRepository;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.List;
 
 public class PessoaForm {
 
-    @NotBlank(message = "CPF nao pode ser nulo ou vazio")
-    private String nome;
-    @NotBlank(message = "CPF nao pode ser nulo ou vazio")
-    private BigDecimal cpf;
-    @NotBlank(message = "SALARIO nao pode ser nulo ou vazio")
-    private BigDecimal salario;
-    @NotBlank(message = "SEXO nao pode ser nulo ou vazio")
-    private String sexo;
-    @NotBlank(message = "ENDEREÇO nao pode ser nulo ou vazio")
-    private List<Endereco> enderecos;
 
-    public Pessoa coverter(PessoaRepository pessoaRepository) throws Exception {
-        Pessoa pessoa = pessoaRepository.findPessoaByCpf(this.cpf);
-        if (pessoa != null){
-          return  new Pessoa(this.nome,this.cpf,this.salario,this.sexo,this.enderecos);
-        }else
-           throw new Exception("nao foi posivel adicionar a pessoa ao banco de dados.");
+    private String nome;
+
+    private BigDecimal cpf;
+
+    private BigDecimal salario;
+
+    private String sexo;
+
+    private List<Endereco> endereco ;
+
+    public PessoaForm(String nome, BigDecimal cpf, BigDecimal salario, String sexo, List<Endereco> endereco) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.salario = salario;
+        this.sexo = sexo;
+        this.endereco = endereco;
     }
 
     public PessoaForm() {
@@ -64,11 +66,11 @@ public class PessoaForm {
         this.sexo = sexo;
     }
 
-    public List<Endereco> getEnderecos() {
-        return enderecos;
+    public List<Endereco> getEndereco() {
+        return endereco;
     }
 
-    public void setEnderecos(List<Endereco> enderecos) {
-        this.enderecos = enderecos;
+    public void setEndereco(List<Endereco> endereco) {
+        this.endereco = endereco;
     }
 }
