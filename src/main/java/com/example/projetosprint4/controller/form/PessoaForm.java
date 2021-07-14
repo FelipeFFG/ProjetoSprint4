@@ -31,6 +31,16 @@ public class PessoaForm {
         this.endereco = endereco;
     }
 
+    public Pessoa atualizar(Long id,PessoaRepository pessoaRepository){
+        Pessoa pessoa = pessoaRepository.getOne(id);
+        pessoa.setNome(this.nome);
+        pessoa.setCpf(this.cpf);
+        pessoa.setSalario(this.salario);
+        pessoa.setSexo(this.sexo);
+        pessoa.setEndereco(this.endereco);
+        return pessoa;
+    }
+
     public PessoaForm() {
     }
 
