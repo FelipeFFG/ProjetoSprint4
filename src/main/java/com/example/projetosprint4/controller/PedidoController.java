@@ -12,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -40,6 +37,13 @@ public class PedidoController {
         return ResponseEntity.notFound().build();
     }
 
-
+    @GetMapping()
+    public ResponseEntity<?>buscarPedidos(){
+        List<Pedido> lista_pedidos = pedidoRepository.findAll();
+        if (lista_pedidos!=null){
+            return new ResponseEntity<>(new PedidoDto().converteListaPedidos(lista_pedidos),HttpStatus.OK);
+        }else
+            return ResponseEntity.notFound().build();
+    }
 
 }
