@@ -12,8 +12,7 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private BigDecimal total;
-
-    @OneToMany
+    @ManyToMany
     private List<Produto> produtos;
 
 

@@ -34,8 +34,8 @@ public class PedidoController {
     @Transactional
     public ResponseEntity<?> cadastrarPedido(@RequestBody PedidoForm pedidoForm){
         if (pedidoForm!=null){
-            PedidoDto produtos = pedidoForm.converte(produtoRepository,pedidoRepository);
-            return new ResponseEntity<>(produtos, HttpStatus.OK);
+            Pedido produtos = pedidoForm.save(produtoRepository,pedidoRepository);
+            return new ResponseEntity<>(  pedidoForm.converte(produtos), HttpStatus.OK);
         }
         return ResponseEntity.notFound().build();
     }

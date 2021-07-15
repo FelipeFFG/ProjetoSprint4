@@ -26,7 +26,7 @@ public class PedidoForm {
         this.listaPedidos = listaPedidos;
     }
 
-    public PedidoDto converte(ProdutoRepository produtoRepository, PedidoRepository pedidoRepository) {
+    public PedidoDto savae(ProdutoRepository produtoRepository, PedidoRepository pedidoRepository) {
         PedidoDto pedido = new PedidoDto();
         Pedido pedidodb = new Pedido();
         int valor=0;
@@ -41,6 +41,32 @@ public class PedidoForm {
         pedido.setTotal(new BigDecimal(valor));
         pedidoRepository.save(pedidodb);
         return pedido;
+    }
+
+    public Pedido save(ProdutoRepository produtoRepository, PedidoRepository pedidoRepository) {
+        Pedido pedido = new Pedido();
+        int valor=0;
+        for (int i=0;i<listaPedidos.size();i++){
+            Produto produto = produtoRepository.findProdutoById(listaPedidos.get(i));
+            pedido.getProdutos().add(produto);
+            valor +=produto.getValor().intValue();
+        }
+        pedido.setTotal(new BigDecimal(valor));
+        pedidoRepository.save(pedido);
+        return pedido;
+    }
+
+
+    public PedidoDto converte(Pedido pedido) {
+      PedidoDto pedidoDto = new PedidoDto();
+      pedidoDto.setTotal(pedido.getTotal());
+      List<ProdutoDto> produtoDtoList = new ArrayList<>();
+      for (int i = 0; i< pedido.getProdutos().size();i++){
+          ProdutoDto produtoDto = new ProdutoDto(pedido.getProdutos().get(i));
+          produtoDtoList.add(produtoDto);
+      }
+      pedidoDto.setProdutoDtoList(produtoDtoList);
+      return pedidoDto;
     }
 
 }
