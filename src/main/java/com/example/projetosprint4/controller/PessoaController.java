@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,7 +25,7 @@ public class PessoaController {
 
     //Cadastrar pessoa no banco de dados.
     @PostMapping
-    public ResponseEntity<?> cadastrar(@RequestBody PessoaForm pessoaForm){
+    public ResponseEntity<?> cadastrar(@Valid @RequestBody PessoaForm pessoaForm){
         if (pessoaForm!=null){
             Pessoa pessoa = pessoaForm.converterPessoaFormParaPessoa();
             PessoaForm pessoaCheck = pessoaForm.save(pessoa,pessoaRepository,enderecoRepository);

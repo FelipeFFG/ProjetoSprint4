@@ -13,15 +13,15 @@ public class Endereco {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @NotBlank(message = "pais nao pode estar vazio")
     private String pais;
-
+    @NotBlank(message = "estado nao pode estar vazio")
     private String estado;
-
+    @NotBlank(message = "cidade nao pode estar vazio")
     private String cidade;
-
+    @NotBlank(message = "cep nao pode estar vazio")
     private String cep;
-
+    @NotBlank(message = "rua nao pode estar vazio")
     private String rua;
 
     public Endereco(Long id, String pais, String estado, String cidade, String cep, String rua) {

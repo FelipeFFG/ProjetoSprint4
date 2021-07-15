@@ -8,7 +8,9 @@ import com.example.projetosprint4.repository.PessoaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.List;
@@ -16,15 +18,15 @@ import java.util.Optional;
 
 public class PessoaForm {
 
-
+    @NotBlank(message = "Nome nao pode ser nulo ou vazio")
     private String nome;
-
+    @NotNull
     private BigDecimal cpf;
-
+    @NotNull
     private BigDecimal salario;
-
+    @NotBlank(message = "sexo nao pode ser nulo ou vazio")
     private String sexo;
-
+    @NotEmpty(message = "Endereco nao pode estar vazio")
     private List<Endereco> endereco ;
 
 
