@@ -104,4 +104,19 @@ public class PessoaForm {
     public void setEndereco(List<Endereco> endereco) {
         this.endereco = endereco;
     }
+
+    public Pessoa atualizar(Long id, PessoaRepository pessoaRepository,EnderecoRepository enderecoRepository) {
+        Pessoa pessoa = pessoaRepository.getOne(id);
+        pessoa.setNome(this.nome);
+        pessoa.setCpf(this.cpf);
+        pessoa.setSexo(this.sexo);
+        for (int i =0; i<pessoa.getEndereco().size();i++){
+            enderecoRepository.delete(pessoa.getEndereco().get(i));
+        }
+        for (int i =0;i<this.endereco.size();i++){
+            enderecoRepository.save(this.endereco.get(i));
+        }
+        pessoa.setEndereco(this.endereco);
+        return pessoa;
+    }
 }

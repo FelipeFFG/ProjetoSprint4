@@ -6,6 +6,7 @@ import com.example.projetosprint4.model.Pessoa;
 import com.example.projetosprint4.repository.EnderecoRepository;
 import com.example.projetosprint4.repository.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +38,7 @@ public class PessoaController {
 
     }
 
-    //Buscar Todas as pessoas
+    //Buscar Todas as pessoas.
     @GetMapping
     public ResponseEntity<?> buscarTodasAsPessoas() {
         List<Pessoa> TodasAsPessoas = pessoaRepository.findAll();
@@ -48,7 +49,7 @@ public class PessoaController {
             return ResponseEntity.notFound().build();
     }
 
-    //Buscar Por ID
+    //Buscar Por ID.
     @GetMapping("/{id}")
     public ResponseEntity<?> BuscarPorId(@PathVariable Long id) {
         Optional<Pessoa> TodasAsPessoas = pessoaRepository.findById(id);
@@ -58,6 +59,7 @@ public class PessoaController {
             return ResponseEntity.notFound().build();
     }
 
+    //Deletar Pessoa do banco de dados.
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<?> remover(@PathVariable Long id){
@@ -68,6 +70,18 @@ public class PessoaController {
         }
         return ResponseEntity.notFound().build();
     }
+
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity<?> atualizar(@PathVariable Long id,@Valid @RequestBody PessoaForm form){
+        Optional<Pessoa> pessoa = pessoaRepository.findById(id);
+        if (pessoa.isPresent()){
+            Pessoa pessoaAtualizada = form.atualizar(id,pessoaRepository,enderecoRepository);
+            return ResponseEntity.ok(new PessoaDto(pessoaAtualizada));
+        }
+        return ResponseEntity.notFound().build();
+    }
+
 
 
 }
