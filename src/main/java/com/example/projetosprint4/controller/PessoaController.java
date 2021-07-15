@@ -1,17 +1,16 @@
 package com.example.projetosprint4.controller;
 
 import com.example.projetosprint4.controller.dto.PessoaDto;
+import com.example.projetosprint4.controller.form.PessoaForm;
 import com.example.projetosprint4.model.Pessoa;
 import com.example.projetosprint4.repository.EnderecoRepository;
 import com.example.projetosprint4.repository.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +23,18 @@ public class PessoaController {
     @Autowired
     private PessoaRepository pessoaRepository;
 
+    //Cadastrar pessoa no banco de dados.
+    @PostMapping
+    public ResponseEntity<?> cadastrar(@RequestBody PessoaForm pessoaForm){
+        if (pessoaForm!=null){
+            Pessoa pessoa = pessoaForm.converterPessoaFormParaPessoa();
+            PessoaForm pessoaCheck = pessoaForm.save(pessoa,pessoaRepository,enderecoRepository);
+            PessoaDto pessoaDto = new PessoaDto(pessoaCheck);
+            return new ResponseEntity<>(pessoaDto,HttpStatus.OK);
+        }
+        return ResponseEntity.notFound().build();
+
+    }
 
     //Buscar Todas as pessoas
     @GetMapping
@@ -36,7 +47,6 @@ public class PessoaController {
             return ResponseEntity.notFound().build();
     }
 
-
     //Buscar Por ID
     @GetMapping("/{id}")
     public ResponseEntity<?> BuscarPorId(@PathVariable Long id) {
@@ -46,6 +56,10 @@ public class PessoaController {
         } else
             return ResponseEntity.notFound().build();
     }
+
+
+
+
 
 
 //Metodo put de atulizar um cadastro.

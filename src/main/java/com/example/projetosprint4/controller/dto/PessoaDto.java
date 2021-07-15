@@ -14,20 +14,21 @@ public class PessoaDto {
     private BigDecimal cpf;
     private List<EnderecoDto> endereco;
 
-
-    public PessoaDto(String nome, BigDecimal cpf, List<EnderecoDto> enderecosDto) {
-        this.nome = nome;
-        this.cpf = cpf;
-        this.endereco = enderecosDto;
-    }
-    public PessoaDto(Pessoa Pessoa) {
-        PessoaDto pessoaDto = new PessoaDto();
-        this.nome = Pessoa.getNome();
-        this.cpf = Pessoa.getCpf();
-        this.endereco = pessoaDto.converteEndereco(Pessoa.getEndereco());
-    }
     public PessoaDto() {
         endereco = new ArrayList<>();
+    }
+    public PessoaDto(Pessoa pessoa) {
+        endereco = new ArrayList<>();
+        this.nome = pessoa.getNome();
+        this.cpf = pessoa.getCpf();
+        this.endereco = converteEndereco(pessoa.getEndereco());
+    }
+
+    public PessoaDto(PessoaForm pessoaForm){
+        endereco = new ArrayList<>();
+        this.nome = pessoaForm.getNome();
+        this.cpf = pessoaForm.getCpf();
+        this.endereco = converteEndereco(pessoaForm.getEndereco());
     }
 
     public List<EnderecoDto> converteEndereco(List<Endereco> enderecos) {
@@ -51,7 +52,6 @@ public class PessoaDto {
             TodasAsPessoasDto.add(pessoaDto);
         }
         return TodasAsPessoasDto;
-
     }
 
 
