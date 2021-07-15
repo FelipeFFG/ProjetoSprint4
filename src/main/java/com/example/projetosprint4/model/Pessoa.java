@@ -1,5 +1,7 @@
 package com.example.projetosprint4.model;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -24,6 +26,7 @@ public class Pessoa {
 
     private String sexo;
 
+    @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
     @OneToMany
     private List<Endereco> endereco;
 

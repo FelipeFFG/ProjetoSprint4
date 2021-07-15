@@ -8,6 +8,7 @@ import com.example.projetosprint4.repository.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -57,22 +58,16 @@ public class PessoaController {
             return ResponseEntity.notFound().build();
     }
 
-
-
-
-
-
-//Metodo put de atulizar um cadastro.
-  /*  @PutMapping("/{id}")
+    @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity<PessoaDto> atualizarCadastro(@PathVariable Long id, @Valid @RequestBody PessoaForm pessoaForm){
-        Optional<Pessoa> optionalPessoaDto = pessoaRepository.findById(id);
-        if (optionalPessoaDto.isPresent()){
-            Pessoa pessoa =pessoaForm.atualizar(id,pessoaRepository);
-            return ResponseEntity.ok(new PessoaDto(pessoa));
+    public ResponseEntity<?> remover(@PathVariable Long id){
+        Optional<Pessoa> pessoa = pessoaRepository.findById(id);
+        if (pessoa.isPresent()){
+            pessoaRepository.deleteById(id);
+            return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();
-    }*/
+    }
 
 
 }
