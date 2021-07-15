@@ -10,6 +10,7 @@ public class ProdutoForm {
 
     private String descricao;
     private BigDecimal valor;
+    private Boolean status;
 
     public ProdutoForm() {
     }
@@ -20,6 +21,13 @@ public class ProdutoForm {
         this.valor = valor;
     }
 
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
 
     public String getDescricao() {
         return descricao;
@@ -48,5 +56,20 @@ public class ProdutoForm {
             return produto;
         }
         return null;
+    }
+
+    public Produto atualizar(Long id, ProdutoRepository produtoRepository) {
+        Produto produto = produtoRepository.getOne(id);
+        produto.setDescricao(this.descricao);
+        produto.setValor(this.valor);
+        produtoRepository.save(produto);
+        return produto;
+    }
+
+    public Produto deletar(Long id, ProdutoRepository produtoRepository) {
+        Produto produto = produtoRepository.getOne(id);
+        produto.setStatus(false);
+        produtoRepository.save(produto);
+        return produto;
     }
 }
