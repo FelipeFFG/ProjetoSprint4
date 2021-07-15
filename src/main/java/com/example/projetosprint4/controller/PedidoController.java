@@ -37,9 +37,20 @@ public class PedidoController {
         return ResponseEntity.notFound().build();
     }
 
+    //busca todos os pedidos.
     @GetMapping()
     public ResponseEntity<?>buscarPedidos(){
         List<Pedido> lista_pedidos = pedidoRepository.findAll();
+        if (lista_pedidos!=null){
+            return new ResponseEntity<>(new PedidoDto().converteListaPedidos(lista_pedidos),HttpStatus.OK);
+        }else
+            return ResponseEntity.notFound().build();
+    }
+
+    //busca os pedidos por Id.
+    @GetMapping({"/{id}"})
+    public ResponseEntity<?> buscarPedidosPorId(@PathVariable Long id){
+        List<Pedido> lista_pedidos = pedidoRepository.findPedidoById(id);
         if (lista_pedidos!=null){
             return new ResponseEntity<>(new PedidoDto().converteListaPedidos(lista_pedidos),HttpStatus.OK);
         }else
