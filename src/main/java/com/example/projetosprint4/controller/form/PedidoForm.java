@@ -25,23 +25,6 @@ public class PedidoForm {
         this.listaPedidos = listaPedidos;
     }
 
-    public PedidoDto savae(ProdutoRepository produtoRepository, PedidoRepository pedidoRepository) {
-        PedidoDto pedido = new PedidoDto();
-        Pedido pedidodb = new Pedido();
-        int valor = 0;
-        for (int i = 0; i < listaPedidos.size(); i++) {
-            Produto produto = produtoRepository.findProdutoById(listaPedidos.get(i));
-            ProdutoDto produtoDto = new ProdutoDto(produto);
-            pedido.getProdutoDtoList().add(produtoDto);
-            valor += produto.getValor().intValue();
-            pedidodb.getProdutos().add(produto);
-        }
-        pedidodb.setTotal(new BigDecimal(valor));
-        pedido.setTotal(new BigDecimal(valor));
-        pedidoRepository.save(pedidodb);
-        return pedido;
-    }
-
     public Pedido save(ProdutoRepository produtoRepository, PedidoRepository pedidoRepository) {
         Pedido pedido = new Pedido();
         int valor = 0;

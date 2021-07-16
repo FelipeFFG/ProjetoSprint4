@@ -1,6 +1,7 @@
 package com.example.projetosprint4.controller;
 
 import com.example.projetosprint4.controller.dto.PessoaDto;
+import com.example.projetosprint4.controller.dto.PessoaDtoID;
 import com.example.projetosprint4.controller.form.PessoaForm;
 import com.example.projetosprint4.model.Pessoa;
 import com.example.projetosprint4.repository.EnderecoRepository;
@@ -53,7 +54,7 @@ public class PessoaController {
     public ResponseEntity<?> BuscarPorId(@PathVariable Long id) {
         Optional<Pessoa> TodasAsPessoas = pessoaRepository.findById(id);
         if (TodasAsPessoas.isPresent()) {
-            return ResponseEntity.ok(new PessoaDto(TodasAsPessoas.get()));
+            return ResponseEntity.ok(new PessoaDtoID(TodasAsPessoas.get()));
         } else
             return ResponseEntity.notFound().build();
     }
