@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +23,7 @@ public class ProdutoController {
     private ProdutoRepository produtoRepository;
 
     @PostMapping
-    public ResponseEntity<?> cadastraProduto(@RequestBody ProdutoForm produtoForm) {
+    public ResponseEntity<?> cadastraProduto(@Valid @RequestBody ProdutoForm produtoForm) {
         if (produtoForm != null) {
             Produto produto = produtoForm.coverteProduto();
             Produto produtoCheck = produtoForm.save(produto, produtoRepository);
@@ -60,7 +61,7 @@ public class ProdutoController {
     //Altera o produto, podendo mudar o status do mesmo.
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<?> alterarProduto(@PathVariable Long id, @RequestBody ProdutoForm produtoForm) {
+    public ResponseEntity<?> alterarProduto(@PathVariable Long id,@Valid @RequestBody ProdutoForm produtoForm) {
         Optional<Produto> produto = produtoRepository.findById(id);
         if (produto.isPresent()) {
             Produto produtoAtualizado = produtoForm.atualizar(id, produtoRepository);

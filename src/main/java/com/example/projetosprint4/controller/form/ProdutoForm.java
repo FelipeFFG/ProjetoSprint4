@@ -3,14 +3,18 @@ package com.example.projetosprint4.controller.form;
 import com.example.projetosprint4.model.Produto;
 import com.example.projetosprint4.repository.ProdutoRepository;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Optional;
 
 public class ProdutoForm {
 
+    @NotBlank(message = "Pais nao pode ser nulo ou vazio")
     private String descricao;
+    @NotNull
     private BigDecimal valor;
-    private Boolean status;
+
 
     public ProdutoForm() {
     }
@@ -21,13 +25,7 @@ public class ProdutoForm {
         this.valor = valor;
     }
 
-    public Boolean getStatus() {
-        return status;
-    }
 
-    public void setStatus(Boolean status) {
-        this.status = status;
-    }
 
     public String getDescricao() {
         return descricao;

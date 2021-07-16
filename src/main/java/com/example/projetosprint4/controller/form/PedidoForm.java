@@ -6,16 +6,15 @@ import com.example.projetosprint4.model.Pedido;
 import com.example.projetosprint4.model.Produto;
 import com.example.projetosprint4.repository.PedidoRepository;
 import com.example.projetosprint4.repository.ProdutoRepository;
-import org.springframework.objenesis.instantiator.perc.PercInstantiator;
 
+import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.function.BiFunction;
 
 public class PedidoForm {
 
+    @NotEmpty(message = "Lista De Pedidos nao pode estar vazio")
     private List<Long> listaPedidos;
 
     public List<Long> getListaPedidos() {
@@ -29,12 +28,12 @@ public class PedidoForm {
     public PedidoDto savae(ProdutoRepository produtoRepository, PedidoRepository pedidoRepository) {
         PedidoDto pedido = new PedidoDto();
         Pedido pedidodb = new Pedido();
-        int valor=0;
-        for (int i=0;i<listaPedidos.size();i++){
+        int valor = 0;
+        for (int i = 0; i < listaPedidos.size(); i++) {
             Produto produto = produtoRepository.findProdutoById(listaPedidos.get(i));
             ProdutoDto produtoDto = new ProdutoDto(produto);
             pedido.getProdutoDtoList().add(produtoDto);
-            valor +=produto.getValor().intValue();
+            valor += produto.getValor().intValue();
             pedidodb.getProdutos().add(produto);
         }
         pedidodb.setTotal(new BigDecimal(valor));
@@ -45,11 +44,11 @@ public class PedidoForm {
 
     public Pedido save(ProdutoRepository produtoRepository, PedidoRepository pedidoRepository) {
         Pedido pedido = new Pedido();
-        int valor=0;
-        for (int i=0;i<listaPedidos.size();i++){
+        int valor = 0;
+        for (int i = 0; i < listaPedidos.size(); i++) {
             Produto produto = produtoRepository.findProdutoById(listaPedidos.get(i));
             pedido.getProdutos().add(produto);
-            valor +=produto.getValor().intValue();
+            valor += produto.getValor().intValue();
         }
         pedido.setTotal(new BigDecimal(valor));
         pedidoRepository.save(pedido);
@@ -58,27 +57,27 @@ public class PedidoForm {
 
 
     public PedidoDto converte(Pedido pedido) {
-      PedidoDto pedidoDto = new PedidoDto();
-      pedidoDto.setTotal(pedido.getTotal());
-      List<ProdutoDto> produtoDtoList = new ArrayList<>();
-      for (int i = 0; i< pedido.getProdutos().size();i++){
-          ProdutoDto produtoDto = new ProdutoDto(pedido.getProdutos().get(i));
-          produtoDtoList.add(produtoDto);
-      }
-      pedidoDto.setProdutoDtoList(produtoDtoList);
-      return pedidoDto;
+        PedidoDto pedidoDto = new PedidoDto();
+        pedidoDto.setTotal(pedido.getTotal());
+        List<ProdutoDto> produtoDtoList = new ArrayList<>();
+        for (int i = 0; i < pedido.getProdutos().size(); i++) {
+            ProdutoDto produtoDto = new ProdutoDto(pedido.getProdutos().get(i));
+            produtoDtoList.add(produtoDto);
+        }
+        pedidoDto.setProdutoDtoList(produtoDtoList);
+        return pedidoDto;
     }
 
-    public Pedido atualizar(Long id, PedidoRepository pedidoRepository,ProdutoRepository produtoRepository) {
+    public Pedido atualizar(Long id, PedidoRepository pedidoRepository, ProdutoRepository produtoRepository) {
         Pedido pedido = pedidoRepository.getOne(id);
-        int valor =0;
-        for (int i =0; i <pedido.getProdutos().size();i++){
+        int valor = 0;
+        for (int i = 0; i < pedido.getProdutos().size(); i++) {
             pedido.setProdutos(new ArrayList<>());
         }
-        for (int i=0;i<listaPedidos.size();i++) {
+        for (int i = 0; i < listaPedidos.size(); i++) {
             Produto produto = produtoRepository.findProdutoById(listaPedidos.get(i));
             pedido.getProdutos().add(produto);
-            valor +=produto.getValor().intValue();
+            valor += produto.getValor().intValue();
         }
         pedido.setTotal(new BigDecimal(valor));
         return pedido;

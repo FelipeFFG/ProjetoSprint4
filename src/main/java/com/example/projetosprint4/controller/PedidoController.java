@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +29,7 @@ public class PedidoController {
 
     @PostMapping()
     @Transactional
-    public ResponseEntity<?> cadastrarPedido(@RequestBody PedidoForm pedidoForm) {
+    public ResponseEntity<?> cadastrarPedido(@Valid @RequestBody PedidoForm pedidoForm) {
         if (pedidoForm != null) {
             Pedido produtos = pedidoForm.save(produtoRepository, pedidoRepository);
             return new ResponseEntity<>(pedidoForm.converte(produtos), HttpStatus.OK);
@@ -70,7 +71,7 @@ public class PedidoController {
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<?> alterarCadastro(@PathVariable Long id, @RequestBody PedidoForm produtoForm) {
+    public ResponseEntity<?> alterarCadastro(@PathVariable Long id, @Valid @RequestBody PedidoForm produtoForm) {
         Optional<Pedido> pedido = pedidoRepository.findById(id);
         if (pedido.isPresent()) {
             Pedido pedidoAtualizado = produtoForm.atualizar(id, pedidoRepository, produtoRepository);

@@ -1,11 +1,18 @@
 package com.example.projetosprint4.controller.form;
 
+import javax.validation.constraints.NotBlank;
+
 public class EnderecoForm {
 
+    @NotBlank(message = "Pais nao pode ser nulo ou vazio")
     private String pais;
+    @NotBlank(message = "Estado nao pode ser nulo ou vazio")
     private String estado;
+    @NotBlank(message = "Cidade nao pode ser nulo ou vazio")
     private String cidade;
+    @NotBlank(message = "Cep nao pode ser nulo ou vazio")
     private String cep;
+    @NotBlank(message = "Rua nao pode ser nulo ou vazio")
     private String rua;
 
     public EnderecoForm(String pais, String estado, String cidade, String cep, String rua) {
