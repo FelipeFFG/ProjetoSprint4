@@ -61,4 +61,18 @@ public class PedidoDto {
         }
         return pedidoDtoList;
     }
+
+    public PedidoDto converte(Pedido pedido) {
+        PedidoDto pedidoDto = new PedidoDto();
+        pedidoDto.setTotal(pedido.getTotal());
+        List<ProdutoDto> produtoDtoList = new ArrayList<>();
+        if (pedido.isStatus()==true){
+            for (int i = 0; i< pedido.getProdutos().size();i++){
+                ProdutoDto produtoDto = new ProdutoDto(pedido.getProdutos().get(i));
+                produtoDtoList.add(produtoDto);
+            }
+        }
+        pedidoDto.setProdutoDtoList(produtoDtoList);
+        return pedidoDto;
+    }
 }

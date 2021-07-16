@@ -1,5 +1,7 @@
 package com.example.projetosprint4.model;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -14,12 +16,20 @@ public class Pedido {
     private BigDecimal total;
     @ManyToMany
     private List<Produto> produtos;
-
+    private boolean status = true;
 
     public Pedido(Long id, BigDecimal total, List<Produto> produtos) {
         this.id = id;
         this.total = total;
         this.produtos = produtos;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public Pedido() {

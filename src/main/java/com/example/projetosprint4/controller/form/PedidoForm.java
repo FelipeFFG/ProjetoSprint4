@@ -69,6 +69,27 @@ public class PedidoForm {
       return pedidoDto;
     }
 
+    public Pedido atualizar(Long id, PedidoRepository pedidoRepository,ProdutoRepository produtoRepository) {
+        Pedido pedido = pedidoRepository.getOne(id);
+        int valor =0;
+        for (int i =0; i <pedido.getProdutos().size();i++){
+            pedido.setProdutos(new ArrayList<>());
+        }
+        for (int i=0;i<listaPedidos.size();i++) {
+            Produto produto = produtoRepository.findProdutoById(listaPedidos.get(i));
+            pedido.getProdutos().add(produto);
+            valor +=produto.getValor().intValue();
+        }
+        pedido.setTotal(new BigDecimal(valor));
+        return pedido;
+    }
+
+    public Pedido deletar(Long id, PedidoRepository pedidoRepository) {
+        Pedido pedido = pedidoRepository.getOne(id);
+        pedido.setStatus(false);
+        pedidoRepository.save(pedido);
+        return pedido;
+    }
 }
 
 

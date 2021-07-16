@@ -6,7 +6,6 @@ import com.example.projetosprint4.model.Pessoa;
 import com.example.projetosprint4.repository.EnderecoRepository;
 import com.example.projetosprint4.repository.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,12 +26,12 @@ public class PessoaController {
 
     //Cadastrar pessoa no banco de dados.
     @PostMapping
-    public ResponseEntity<?> cadastrar(@Valid @RequestBody PessoaForm pessoaForm){
-        if (pessoaForm!=null){
+    public ResponseEntity<?> cadastrar(@Valid @RequestBody PessoaForm pessoaForm) {
+        if (pessoaForm != null) {
             Pessoa pessoa = pessoaForm.converterPessoaFormParaPessoa();
-            PessoaForm pessoaCheck = pessoaForm.save(pessoa,pessoaRepository,enderecoRepository);
+            PessoaForm pessoaCheck = pessoaForm.save(pessoa, pessoaRepository, enderecoRepository);
             PessoaDto pessoaDto = new PessoaDto(pessoaCheck);
-            return new ResponseEntity<>(pessoaDto,HttpStatus.OK);
+            return new ResponseEntity<>(pessoaDto, HttpStatus.OK);
         }
         return ResponseEntity.notFound().build();
 
@@ -62,9 +61,9 @@ public class PessoaController {
     //Deletar Pessoa do banco de dados.
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity<?> remover(@PathVariable Long id){
+    public ResponseEntity<?> remover(@PathVariable Long id) {
         Optional<Pessoa> pessoa = pessoaRepository.findById(id);
-        if (pessoa.isPresent()){
+        if (pessoa.isPresent()) {
             pessoaRepository.deleteById(id);
             return ResponseEntity.ok().build();
         }
@@ -73,15 +72,14 @@ public class PessoaController {
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<?> atualizar(@PathVariable Long id,@Valid @RequestBody PessoaForm form){
+    public ResponseEntity<?> atualizar(@PathVariable Long id, @Valid @RequestBody PessoaForm form) {
         Optional<Pessoa> pessoa = pessoaRepository.findById(id);
-        if (pessoa.isPresent()){
-            Pessoa pessoaAtualizada = form.atualizar(id,pessoaRepository,enderecoRepository);
+        if (pessoa.isPresent()) {
+            Pessoa pessoaAtualizada = form.atualizar(id, pessoaRepository, enderecoRepository);
             return ResponseEntity.ok(new PessoaDto(pessoaAtualizada));
         }
         return ResponseEntity.notFound().build();
     }
-
 
 
 }

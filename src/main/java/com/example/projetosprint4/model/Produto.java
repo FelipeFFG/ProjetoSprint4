@@ -14,7 +14,7 @@ public class Produto {
     private Long id ;
     private String descricao;
     private BigDecimal valor;
-    private boolean status=true;
+    private boolean status = true;
 
     public Produto() {
     }
