@@ -40,18 +40,6 @@ public class PedidoForm {
     }
 
 
-    public PedidoDto converte(Pedido pedido) {
-        PedidoDto pedidoDto = new PedidoDto();
-        pedidoDto.setTotal(pedido.getTotal());
-        List<ProdutoDto> produtoDtoList = new ArrayList<>();
-        for (int i = 0; i < pedido.getProdutos().size(); i++) {
-            ProdutoDto produtoDto = new ProdutoDto(pedido.getProdutos().get(i));
-            produtoDtoList.add(produtoDto);
-        }
-        pedidoDto.setProdutoDtoList(produtoDtoList);
-        return pedidoDto;
-    }
-
     public Pedido atualizar(Long id, PedidoRepository pedidoRepository, ProdutoRepository produtoRepository) {
         Pedido pedido = pedidoRepository.getOne(id);
         int valor = 0;
@@ -63,6 +51,7 @@ public class PedidoForm {
             pedido.getProdutos().add(produto);
             valor += produto.getValor().intValue();
         }
+        pedido.setStatus(true);
         pedido.setTotal(new BigDecimal(valor));
         return pedido;
     }

@@ -6,7 +6,6 @@ import com.example.projetosprint4.repository.ProdutoRepository;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.Optional;
 
 public class ProdutoForm {
 
@@ -26,7 +25,6 @@ public class ProdutoForm {
     }
 
 
-
     public String getDescricao() {
         return descricao;
     }
@@ -44,13 +42,13 @@ public class ProdutoForm {
     }
 
     public Produto coverteProduto() {
-        Produto produto = new Produto(this.descricao,this.valor);
+        Produto produto = new Produto(this.descricao, this.valor);
         return produto;
     }
 
     public Produto save(Produto produto, ProdutoRepository produtoRepository) {
         Produto produtodb = produtoRepository.findProdutoByDescricao(produto.getDescricao());
-        if (produtodb==null){
+        if (produtodb == null) {
             return produto;
         }
         return null;

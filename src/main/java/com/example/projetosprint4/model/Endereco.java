@@ -24,8 +24,7 @@ public class Endereco {
     @NotBlank(message = "rua nao pode estar vazio")
     private String rua;
 
-    public Endereco(Long id, String pais, String estado, String cidade, String cep, String rua) {
-        this.id = id;
+    public Endereco(String pais, String estado, String cidade, String cep, String rua) {
         this.pais = pais;
         this.estado = estado;
         this.cidade = cidade;

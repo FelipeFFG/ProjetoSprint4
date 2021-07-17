@@ -17,18 +17,12 @@ public class PessoaDto {
     public PessoaDto() {
         endereco = new ArrayList<>();
     }
+
     public PessoaDto(Pessoa pessoa) {
         endereco = new ArrayList<>();
         this.nome = pessoa.getNome();
         this.cpf = pessoa.getCpf();
         this.endereco = converteEndereco(pessoa.getEndereco());
-    }
-
-    public PessoaDto(PessoaForm pessoaForm){
-        endereco = new ArrayList<>();
-        this.nome = pessoaForm.getNome();
-        this.cpf = pessoaForm.getCpf();
-        this.endereco = converteEndereco(pessoaForm.getEndereco());
     }
 
     public List<EnderecoDto> converteEndereco(List<Endereco> enderecos) {

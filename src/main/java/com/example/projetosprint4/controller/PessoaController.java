@@ -30,7 +30,7 @@ public class PessoaController {
     public ResponseEntity<PessoaDto> cadastrar(@Valid @RequestBody PessoaForm pessoaForm) {
         if (pessoaForm != null) {
             Pessoa pessoa = pessoaForm.converterPessoaFormParaPessoa();
-            PessoaForm pessoaCheck = pessoaForm.save(pessoa, pessoaRepository, enderecoRepository);
+            Pessoa pessoaCheck = pessoaForm.save(pessoa, pessoaRepository, enderecoRepository);
             return new ResponseEntity<>( new PessoaDto(pessoaCheck), HttpStatus.CREATED);
         }
         return ResponseEntity.notFound().build();

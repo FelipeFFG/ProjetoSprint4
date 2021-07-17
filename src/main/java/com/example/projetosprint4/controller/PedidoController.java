@@ -44,13 +44,16 @@ public class PedidoController {
     public ResponseEntity<List<PedidoDto>> buscarPedidos() {
         List<Pedido> lista_pedidos = pedidoRepository.findAll();
         List<Pedido> pedidosAtivos = new ArrayList<>();
-        if (lista_pedidos != null) {
-            for (int i =0;i<lista_pedidos.size();i++){
-                if (lista_pedidos.get(i).isStatus()==true){
+        if (!lista_pedidos.isEmpty()) {
+            for (int i = 0; i < lista_pedidos.size(); i++) {
+                if (lista_pedidos.get(i).isStatus() == true) {
                     pedidosAtivos.add(lista_pedidos.get(i));
                 }
             }
-            return  ResponseEntity.ok(new PedidoDto().converteListaPedidos(pedidosAtivos));
+            if (pedidosAtivos.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
+            return ResponseEntity.ok(new PedidoDto().converteListaPedidos(pedidosAtivos));
         } else
             return ResponseEntity.notFound().build();
     }
@@ -60,11 +63,15 @@ public class PedidoController {
     public ResponseEntity<List<PedidoDto>> buscarPedidosPorId(@PathVariable Long id) {
         List<Pedido> lista_pedidos = pedidoRepository.findPedidoById(id);
         List<Pedido> pedidosAtivos = new ArrayList<>();
-        if (lista_pedidos != null) {
-            for (int i =0;i<lista_pedidos.size();i++){
-                if (lista_pedidos.get(i).isStatus()==true){
+        System.out.println(lista_pedidos);
+        if (!lista_pedidos.isEmpty()) {
+            for (int i = 0; i < lista_pedidos.size(); i++) {
+                if (lista_pedidos.get(i).isStatus() == true) {
                     pedidosAtivos.add(lista_pedidos.get(i));
                 }
+            }
+            if (pedidosAtivos.isEmpty()) {
+                return ResponseEntity.notFound().build();
             }
             return ResponseEntity.ok(new PedidoDto().converteListaPedidos(pedidosAtivos));
         } else
