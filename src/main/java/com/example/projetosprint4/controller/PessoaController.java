@@ -40,7 +40,7 @@ public class PessoaController {
 
     //Buscar Todas as pessoas.
     @GetMapping
-    public ResponseEntity<?> buscarTodasAsPessoas() {
+    public ResponseEntity<List<PessoaDto>> buscarTodasAsPessoas() {
         List<Pessoa> TodasAsPessoas = pessoaRepository.findAll();
         if (TodasAsPessoas != null) {
             return new ResponseEntity<>(new PessoaDto()
@@ -51,7 +51,7 @@ public class PessoaController {
 
     //Buscar Por ID.
     @GetMapping("/{id}")
-    public ResponseEntity<?> BuscarPorId(@PathVariable Long id) {
+    public ResponseEntity<PessoaDtoID> BuscarPorId(@PathVariable Long id) {
         Optional<Pessoa> TodasAsPessoas = pessoaRepository.findById(id);
         if (TodasAsPessoas.isPresent()) {
             return ResponseEntity.ok(new PessoaDtoID(TodasAsPessoas.get()));

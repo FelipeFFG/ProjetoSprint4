@@ -39,7 +39,7 @@ public class PedidoController {
 
     //busca todos os pedidos se estiver ativo
     @GetMapping()
-    public ResponseEntity<?> buscarPedidos() {
+    public ResponseEntity<List<PedidoDto>> buscarPedidos() {
         List<Pedido> lista_pedidos = pedidoRepository.findAll();
         List<Pedido> pedidosAtivos = new ArrayList<>();
         if (lista_pedidos != null) {
@@ -48,14 +48,14 @@ public class PedidoController {
                     pedidosAtivos.add(lista_pedidos.get(i));
                 }
             }
-            return new ResponseEntity<>(new PedidoDto().converteListaPedidos(pedidosAtivos), HttpStatus.OK);
+            return  ResponseEntity.ok(new PedidoDto().converteListaPedidos(pedidosAtivos));
         } else
             return ResponseEntity.notFound().build();
     }
 
     //busca os pedidos por Id se estiver ativo
     @GetMapping({"/{id}"})
-    public ResponseEntity<?> buscarPedidosPorId(@PathVariable Long id) {
+    public ResponseEntity<List<PedidoDto>> buscarPedidosPorId(@PathVariable Long id) {
         List<Pedido> lista_pedidos = pedidoRepository.findPedidoById(id);
         List<Pedido> pedidosAtivos = new ArrayList<>();
         if (lista_pedidos != null) {
@@ -64,14 +64,14 @@ public class PedidoController {
                     pedidosAtivos.add(lista_pedidos.get(i));
                 }
             }
-            return new ResponseEntity<>(new PedidoDto().converteListaPedidos(pedidosAtivos), HttpStatus.OK);
+            return ResponseEntity.ok(new PedidoDto().converteListaPedidos(pedidosAtivos));
         } else
             return ResponseEntity.notFound().build();
     }
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<?> alterarCadastro(@PathVariable Long id, @Valid @RequestBody PedidoForm produtoForm) {
+    public ResponseEntity<PedidoDto> alterarCadastro(@PathVariable Long id, @Valid @RequestBody PedidoForm produtoForm) {
         Optional<Pedido> pedido = pedidoRepository.findById(id);
         if (pedido.isPresent()) {
             Pedido pedidoAtualizado = produtoForm.atualizar(id, pedidoRepository, produtoRepository);

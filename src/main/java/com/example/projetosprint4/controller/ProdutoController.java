@@ -35,7 +35,7 @@ public class ProdutoController {
 
     //Retorna os produtos que estiverem disponiveis.
     @GetMapping()
-    public ResponseEntity<?> buscarTodosOsProdutos() {
+    public ResponseEntity<List<ProdutoDto>> buscarTodosOsProdutos() {
         List<Produto> produto = produtoRepository.findAll();
         List<ProdutoDto> listaProdutosDto = new ArrayList<>();
         if (!produto.isEmpty()) {
@@ -50,7 +50,7 @@ public class ProdutoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> buscarProdutosPorId(@PathVariable Long id) {
+    public ResponseEntity<ProdutoDto> buscarProdutosPorId(@PathVariable Long id) {
         Optional<Produto> produto = produtoRepository.findById(id);
         if (produto.isPresent()) {
             return new ResponseEntity<>(new ProdutoDto(produto.get()), HttpStatus.OK);
