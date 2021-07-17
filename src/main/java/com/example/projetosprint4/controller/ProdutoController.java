@@ -26,9 +26,12 @@ public class ProdutoController {
     public ResponseEntity<ProdutoDto> cadastraProduto(@Valid @RequestBody ProdutoForm produtoForm) {
         if (produtoForm != null) {
             Produto produto = produtoForm.coverteProduto();
-            Produto produtoCheck = produtoForm.save(produto, produtoRepository);
-            Produto adicionado = produtoRepository.save(produtoCheck);
-            return new ResponseEntity<>(new ProdutoDto(adicionado), HttpStatus.CREATED);
+            Produto produtodb = produtoRepository.findProdutoByDescricao(produto.getDescricao());
+            if (produtodb == null) {
+                produtoRepository.save(produto);
+                return new ResponseEntity<>(new ProdutoDto(produto), HttpStatus.CREATED);
+            }else
+                return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.notFound().build();
     }
