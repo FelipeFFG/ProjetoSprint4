@@ -12,22 +12,21 @@ public class PessoaDto {
 
     private String nome;
     private BigDecimal cpf;
-    private List<EnderecoDto> endereco;
+    private List<EnderecoDto> endereco = new ArrayList<>();
 
     public PessoaDto() {
-        endereco = new ArrayList<>();
+
     }
 
     public PessoaDto(Pessoa pessoa) {
-        endereco = new ArrayList<>();
         this.nome = pessoa.getNome();
         this.cpf = pessoa.getCpf();
         this.endereco = converteEndereco(pessoa.getEndereco());
     }
 
     public List<EnderecoDto> converteEndereco(List<Endereco> enderecos) {
-        EnderecoDto enderecoDto = new EnderecoDto();
         for (int i = 0; i < enderecos.size(); i++) {
+            EnderecoDto enderecoDto = new EnderecoDto();
             enderecoDto.setCidade(enderecos.get(i).getCidade());
             enderecoDto.setRua(enderecos.get(i).getRua());
             endereco.add(enderecoDto);

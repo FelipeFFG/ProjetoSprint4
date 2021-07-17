@@ -62,18 +62,8 @@ public class PedidoController {
     @GetMapping({"/{id}"})
     public ResponseEntity<List<PedidoDto>> buscarPedidosPorId(@PathVariable Long id) {
         List<Pedido> lista_pedidos = pedidoRepository.findPedidoById(id);
-        List<Pedido> pedidosAtivos = new ArrayList<>();
-        System.out.println(lista_pedidos);
         if (!lista_pedidos.isEmpty()) {
-            for (int i = 0; i < lista_pedidos.size(); i++) {
-                if (lista_pedidos.get(i).isStatus() == true) {
-                    pedidosAtivos.add(lista_pedidos.get(i));
-                }
-            }
-            if (pedidosAtivos.isEmpty()) {
-                return ResponseEntity.notFound().build();
-            }
-            return ResponseEntity.ok(new PedidoDto().converteListaPedidos(pedidosAtivos));
+            return ResponseEntity.ok(new PedidoDto().converteListaPedidos(lista_pedidos));
         } else
             return ResponseEntity.notFound().build();
     }
