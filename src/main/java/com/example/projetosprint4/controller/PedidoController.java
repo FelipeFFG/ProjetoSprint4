@@ -32,7 +32,9 @@ public class PedidoController {
     public ResponseEntity<?> cadastrarPedido(@Valid @RequestBody PedidoForm pedidoForm) {
         if (pedidoForm != null) {
             Pedido produtos = pedidoForm.save(produtoRepository, pedidoRepository);
-            return new ResponseEntity<>(pedidoForm.converte(produtos), HttpStatus.OK);
+            List<Pedido> pedido = new ArrayList<>();
+            pedido.add(produtos);
+            return new ResponseEntity<>(new PedidoDto().converteListaPedidos(pedido), HttpStatus.CREATED);
         }
         return ResponseEntity.notFound().build();
     }
@@ -76,7 +78,7 @@ public class PedidoController {
         if (pedido.isPresent()) {
             Pedido pedidoAtualizado = produtoForm.atualizar(id, pedidoRepository, produtoRepository);
             PedidoDto pedidoDto = new PedidoDto();
-            return new ResponseEntity<>(pedidoDto.converte(pedidoAtualizado), HttpStatus.OK);
+            return ResponseEntity.ok(pedidoDto.converte(pedidoAtualizado));
         }
         return ResponseEntity.notFound().build();
     }

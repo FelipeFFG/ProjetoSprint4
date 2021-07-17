@@ -27,12 +27,11 @@ public class PessoaController {
 
     //Cadastrar pessoa no banco de dados.
     @PostMapping
-    public ResponseEntity<?> cadastrar(@Valid @RequestBody PessoaForm pessoaForm) {
+    public ResponseEntity<PessoaDto> cadastrar(@Valid @RequestBody PessoaForm pessoaForm) {
         if (pessoaForm != null) {
             Pessoa pessoa = pessoaForm.converterPessoaFormParaPessoa();
             PessoaForm pessoaCheck = pessoaForm.save(pessoa, pessoaRepository, enderecoRepository);
-            PessoaDto pessoaDto = new PessoaDto(pessoaCheck);
-            return new ResponseEntity<>(pessoaDto, HttpStatus.OK);
+            return new ResponseEntity<>( new PessoaDto(pessoaCheck), HttpStatus.CREATED);
         }
         return ResponseEntity.notFound().build();
 
@@ -43,8 +42,7 @@ public class PessoaController {
     public ResponseEntity<List<PessoaDto>> buscarTodasAsPessoas() {
         List<Pessoa> TodasAsPessoas = pessoaRepository.findAll();
         if (TodasAsPessoas != null) {
-            return new ResponseEntity<>(new PessoaDto()
-                    .convertePessoasparaPessoasDtoComEnderecoDto(TodasAsPessoas), HttpStatus.OK);
+            return  ResponseEntity.ok(new PessoaDto().convertePessoasparaPessoasDtoComEnderecoDto(TodasAsPessoas));
         } else
             return ResponseEntity.notFound().build();
     }

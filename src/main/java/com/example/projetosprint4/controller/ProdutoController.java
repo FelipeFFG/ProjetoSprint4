@@ -23,7 +23,7 @@ public class ProdutoController {
     private ProdutoRepository produtoRepository;
 
     @PostMapping
-    public ResponseEntity<?> cadastraProduto(@Valid @RequestBody ProdutoForm produtoForm) {
+    public ResponseEntity<ProdutoDto> cadastraProduto(@Valid @RequestBody ProdutoForm produtoForm) {
         if (produtoForm != null) {
             Produto produto = produtoForm.coverteProduto();
             Produto produtoCheck = produtoForm.save(produto, produtoRepository);
@@ -44,7 +44,7 @@ public class ProdutoController {
                     listaProdutosDto.add(new ProdutoDto(produto.get(i)));
                 }
             }
-            return new ResponseEntity<>(listaProdutosDto, HttpStatus.OK);
+            return ResponseEntity.ok(listaProdutosDto);
         }
         return ResponseEntity.notFound().build();
     }
@@ -53,7 +53,7 @@ public class ProdutoController {
     public ResponseEntity<ProdutoDto> buscarProdutosPorId(@PathVariable Long id) {
         Optional<Produto> produto = produtoRepository.findById(id);
         if (produto.isPresent()) {
-            return new ResponseEntity<>(new ProdutoDto(produto.get()), HttpStatus.OK);
+            return  ResponseEntity.ok(new ProdutoDto(produto.get()));
         }
         return ResponseEntity.notFound().build();
     }
@@ -61,7 +61,7 @@ public class ProdutoController {
     //Altera o produto, podendo mudar o status do mesmo.
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<?> alterarProduto(@PathVariable Long id,@Valid @RequestBody ProdutoForm produtoForm) {
+    public ResponseEntity<ProdutoDto> alterarProduto(@PathVariable Long id,@Valid @RequestBody ProdutoForm produtoForm) {
         Optional<Produto> produto = produtoRepository.findById(id);
         if (produto.isPresent()) {
             Produto produtoAtualizado = produtoForm.atualizar(id, produtoRepository);
