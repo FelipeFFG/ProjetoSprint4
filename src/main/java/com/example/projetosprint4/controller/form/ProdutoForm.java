@@ -46,13 +46,6 @@ public class ProdutoForm {
         return produto;
     }
 
-    public Produto save(Produto produto, ProdutoRepository produtoRepository) {
-        Produto produtodb = produtoRepository.findProdutoByDescricao(produto.getDescricao());
-        if (produtodb == null) {
-            return produto;
-        }
-        return null;
-    }
 
     public Produto atualizar(Long id, ProdutoRepository produtoRepository) {
         Produto produto = produtoRepository.getOne(id);
